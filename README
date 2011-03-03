@@ -2,4 +2,43 @@ Description:
 	Easy to manage event handling framework 
 	
 	
+How to (code can be found in com.bluedesk.event.example) ?
+
+- Declare a new Event:
+
+	@Event
+	public class EchoEvent {}
+
+- Declare an Event Handler (simply annotate the method
+
+	public class EchoHandler {
+
+	    EchoHandler() {
+			EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY).register(this);
+	    }
+	
+	    @EventHandler(event = EchoEvent.class)
+	    public void handle(final EchoEvent event) {
+			System.out.println("I got the event!");
+	    }
+	}
+	
+- Fire an event to service
+
+	public class EchoPublisher {
+
+	    private final EventService eventService;
+	
+	    public EchoPublisher() {
+			eventService = EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY);
+	    }
+	
+	    public void callMe() {
+			eventService.fire(new EchoEvent());
+	    }
+	}
+	
+	
+	
+	
 http://iambivas.blogspot.com/
