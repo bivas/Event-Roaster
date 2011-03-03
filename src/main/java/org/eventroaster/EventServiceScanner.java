@@ -28,6 +28,7 @@ final class EventServiceScanner {
     }
 
     private final Map<Class<?>, List<Method>> methodsToInvoke;
+    private final EventPriorityComparator priorityComparator = new EventPriorityComparator();
 
     private EventServiceScanner() {
 	final ConfigurationBuilder configuration = new ConfigurationBuilder()
@@ -75,6 +76,7 @@ final class EventServiceScanner {
 	    methodsPerEvent = new ArrayList<Method>();
 	}
 	methodsPerEvent.add(method);
+	Collections.sort(methodsPerEvent, priorityComparator);
 	methods.put(event, methodsPerEvent);
     }
 

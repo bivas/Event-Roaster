@@ -3,6 +3,9 @@ package org.eventroaster;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eventroaster.annotation.Event;
 import org.eventroaster.annotation.EventHandler;
 import org.junit.Before;
@@ -13,6 +16,7 @@ public class EventServiceImplTest {
 
     private boolean called = false;
     private boolean calledWithEvent = false;
+    private final List<String> priorityCheck = new ArrayList<String>(2);
     private EventService eventService;
 
     @Before
@@ -37,6 +41,7 @@ public class EventServiceImplTest {
     private void assertCalled() {
 	assertTrue("default hander not called", called);
 	assertTrue("hander not called", calledWithEvent);
+	assertTrue("priority", priorityCheck.get(0).equals("handlerTest"));
     }
 
     @Test
@@ -81,14 +86,16 @@ public class EventServiceImplTest {
 	}
     }
 
-    @EventHandler(event = TestEvent.class)
+    @EventHandler(event = TestEvent.class, priority = 10)
     public void handlerTest() {
 	called = true;
+	priorityCheck.add("handlerTest");
     }
 
     @EventHandler(event = TestEvent.class)
     public void handlerTestWithEvent(final TestEvent event) {
 	calledWithEvent = true;
+	priorityCheck.add("handlerTestWithEvent");
     }
 
     private enum TestServiceKey implements EventServiceKey {
