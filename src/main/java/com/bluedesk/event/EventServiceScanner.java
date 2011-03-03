@@ -51,14 +51,20 @@ final class EventServiceScanner {
 
     private void validateMethod(final Method method) {
 	final Class<?>[] parameterTypes = method.getParameterTypes();
-	Validate.isTrue(!(parameterTypes.length != 1),
-			method.getName() + " must recieve a single parameter of annotated as Event");
 	Validate.isTrue(Modifier.isPublic(method.getModifiers()), method.getName() + " must be declared public");
+	// The event is annotated as @Event
 	final EventHandler annotation = method.getAnnotation(EventHandler.class);
 	final Class<?> event = annotation.event();
 	Validate.notNull(event.getAnnotation(com.bluedesk.event.annotation.Event.class),
-			method.getName() + " must recieve a single parameter of annotated as Event");
-	Validate.isTrue(parameterTypes[0].equals(event), "method must accept event of type ", event);
+		method.getName() + " must recieve a single parameter of annotated as Event");
+
+	// check method arguments if requires the event
+	Validate.isTrue(parameterTypes.length <= 1,
+		method.getName() + " must recieve up to single parameter of annotated as Event");
+	if (parameterTypes.length == 1) {
+	    Validate.isTrue(parameterTypes[0].equals(event), "method must accept event of type ", event);
+	}
+
     }
 
     private void collectInvokedMethod(final Map<Class<?>, List<Method>> methods, final Method method) {

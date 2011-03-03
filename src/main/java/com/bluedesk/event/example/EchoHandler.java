@@ -9,9 +9,8 @@ public class EchoHandler {
 	EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY).register(this);
     }
 
-
     @EventHandler(event = EchoEvent.class)
-    public void handle(final EchoEvent event) {
+    public void handle() {
 	System.out.println("I got the event!");
     }
 }

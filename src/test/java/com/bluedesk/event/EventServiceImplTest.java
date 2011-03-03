@@ -13,19 +13,31 @@ import com.bluedesk.event.annotation.EventHandler;
 public class EventServiceImplTest {
 
     private boolean called = false;
+    private boolean calledWithEvent = false;
     private EventService eventService;
 
     @Before
     public void setUp() {
 	eventService = EventServiceFactory.getEventService(TestServiceKey.TEST_KEY);
 	called = false;
+	calledWithEvent = false;
     }
 
     @Test
     public void fireEventWithoutHandler() throws Exception {
 	eventService.fire(new TestEvent());
 	waitForEvent();
+	assertNotCalled();
+    }
+
+    private void assertNotCalled() {
 	assertFalse(called);
+	assertFalse(calledWithEvent);
+    }
+
+    private void assertCalled() {
+	assertTrue(called);
+	assertTrue(calledWithEvent);
     }
 
     @Test
@@ -33,7 +45,7 @@ public class EventServiceImplTest {
 	register();
 	eventService.fire(new TestEvent());
 	waitForEvent();
-	assertTrue(called);
+	assertCalled();
     }
 
 
@@ -82,8 +94,13 @@ public class EventServiceImplTest {
     }
 
     @EventHandler(event = TestEvent.class)
-    public void handlerTest(final TestEvent event) {
+    public void handlerTest() {
 	called = true;
+    }
+
+    @EventHandler(event = TestEvent.class)
+    public void handlerTestWithEvent(final TestEvent event) {
+	calledWithEvent = true;
     }
 
     private enum TestServiceKey implements EventServiceKey {

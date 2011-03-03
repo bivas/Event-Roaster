@@ -18,7 +18,12 @@ final class EventHandlingCallback implements Callable<Boolean> {
     @Override
     public Boolean call() throws Exception {
 	try {
-	    method.invoke(listener, event);
+	    final Class<?>[] types = method.getParameterTypes();
+	    if (types.length == 0) {
+		method.invoke(listener);
+	    } else {
+		method.invoke(listener, event);
+	    }
 	} catch (final Exception e) {
 	    e.printStackTrace();
 	}
