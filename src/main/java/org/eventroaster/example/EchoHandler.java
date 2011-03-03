@@ -1,7 +1,7 @@
-package com.bluedesk.event.example;
+package org.eventroaster.example;
 
-import com.bluedesk.event.EventServiceFactory;
-import com.bluedesk.event.annotation.EventHandler;
+import org.eventroaster.EventServiceFactory;
+import org.eventroaster.annotation.EventHandler;
 
 public class EchoHandler {
 

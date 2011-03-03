@@ -2,14 +2,14 @@ Description:
 	Easy to manage event handling framework 
 	
 	
-How to (code can be found in com.bluedesk.event.example) ?
+How to (code can be found in org.eventroaster.example) ?
 
 - Declare a new Event:
 
 	@Event
 	public class EchoEvent {}
 
-- Declare an Event Handler (simply annotate the method
+- Declare an Event Handler (simply annotate the method)
 
 	public class EchoHandler {
 

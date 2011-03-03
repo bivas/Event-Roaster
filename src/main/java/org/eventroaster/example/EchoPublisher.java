@@ -1,7 +1,7 @@
-package com.bluedesk.event.example;
+package org.eventroaster.example;
 
-import com.bluedesk.event.EventService;
-import com.bluedesk.event.EventServiceFactory;
+import org.eventroaster.EventService;
+import org.eventroaster.EventServiceFactory;
 
 public class EchoPublisher {
 

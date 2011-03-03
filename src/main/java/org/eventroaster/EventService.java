@@ -1,4 +1,4 @@
-package com.bluedesk.event;
+package org.eventroaster;
 
 public interface EventService {
 

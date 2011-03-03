@@ -1,4 +1,4 @@
-package com.bluedesk.event;
+package org.eventroaster;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.Validate;
+import org.eventroaster.annotation.EventHandler;
 import org.reflections.Reflections;
 import org.reflections.scanners.MethodAnnotationsScanner;
 import org.reflections.scanners.SubTypesScanner;
@@ -17,7 +18,6 @@ import org.reflections.scanners.TypeAnnotationsScanner;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
 
-import com.bluedesk.event.annotation.EventHandler;
 
 final class EventServiceScanner {
 
@@ -55,7 +55,7 @@ final class EventServiceScanner {
 	// The event is annotated as @Event
 	final EventHandler annotation = method.getAnnotation(EventHandler.class);
 	final Class<?> event = annotation.event();
-	Validate.notNull(event.getAnnotation(com.bluedesk.event.annotation.Event.class),
+	Validate.notNull(event.getAnnotation(org.eventroaster.annotation.Event.class),
 		method.getName() + " must recieve a single parameter of annotated as Event");
 
 	// check method arguments if requires the event

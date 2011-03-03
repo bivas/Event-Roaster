@@ -1,6 +1,6 @@
-package com.bluedesk.event.example;
+package org.eventroaster.example;
 
-import com.bluedesk.event.EventServiceKey;
+import org.eventroaster.EventServiceKey;
 
 public enum EchoServiceKey implements EventServiceKey {
     ECHO_SERVICE_KEY;

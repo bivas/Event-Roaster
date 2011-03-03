@@ -1,14 +1,17 @@
-package com.bluedesk.event;
+package org.eventroaster;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.eventroaster.EventService;
+import org.eventroaster.EventServiceFactory;
+import org.eventroaster.EventServiceKey;
+import org.eventroaster.annotation.Event;
+import org.eventroaster.annotation.EventHandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.bluedesk.event.annotation.Event;
-import com.bluedesk.event.annotation.EventHandler;
 
 public class EventServiceImplTest {
 

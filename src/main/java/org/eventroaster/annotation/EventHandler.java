@@ -1,4 +1,4 @@
-package com.bluedesk.event.annotation;
+package org.eventroaster.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

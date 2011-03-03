@@ -1,4 +1,4 @@
-package com.bluedesk.event;
+package org.eventroaster;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -13,8 +13,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
 import org.apache.commons.lang.Validate;
+import org.eventroaster.annotation.Event;
 
-import com.bluedesk.event.annotation.Event;
 
 final class EventServiceImpl implements EventService {
 

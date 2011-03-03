@@ -1,4 +1,4 @@
-package com.bluedesk.event;
+package org.eventroaster;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
