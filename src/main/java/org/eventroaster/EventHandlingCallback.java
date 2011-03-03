@@ -3,6 +3,8 @@ package org.eventroaster;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
+import org.apache.commons.logging.LogFactory;
+
 final class EventHandlingCallback implements Callable<Boolean> {
 
     private final Object event;
@@ -16,7 +18,7 @@ final class EventHandlingCallback implements Callable<Boolean> {
     }
 
     @Override
-    public Boolean call() throws Exception {
+    public Boolean call() {
 	try {
 	    final Class<?>[] types = method.getParameterTypes();
 	    if (types.length == 0) {
@@ -25,7 +27,8 @@ final class EventHandlingCallback implements Callable<Boolean> {
 		method.invoke(listener, event);
 	    }
 	} catch (final Exception e) {
-	    e.printStackTrace();
+	    LogFactory.getLog(EventHandlingCallback.class).warn("Got exception while invoking " + method, e);
+	    return false;
 	}
 	return true;
     }

@@ -10,7 +10,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
 
 import org.apache.commons.lang.Validate;
 import org.eventroaster.annotation.Event;
@@ -33,20 +32,11 @@ final class EventServiceImpl implements EventService {
     }
 
     private ExecutorService createExecutorService() {
-	return Executors.newCachedThreadPool(new ThreadFactory() {
-	    private final ThreadFactory defaultThreadFactory = Executors.defaultThreadFactory();
-
-	    @Override
-	    public Thread newThread(final Runnable r) {
-		final Thread thread = defaultThreadFactory.newThread(r);
-		thread.setDaemon(true);
-		return thread;
-	    }
-	});
+	return Executors.newCachedThreadPool();
     }
 
     private void startEventServiceHandling(final EventServiceKey eventServiceKey) {
-	executorService.execute(new EventHandling());
+	executorService.submit(new EventHandling(eventServiceKey));
     }
 
     @Override
@@ -85,14 +75,20 @@ final class EventServiceImpl implements EventService {
         return eventServiceKey;
     }
 
-    private final class EventHandling implements Runnable {
+    private final class EventHandling implements Callable<Boolean> {
+
+	public EventHandling(final EventServiceKey eventServiceKey) {
+	    Thread.currentThread().setName(eventServiceKey.toString());
+	}
+
 	@Override
-	public void run() {
+	public Boolean call() {
 	    while (true) {
 		try {
 		    fireEvent(events.take());
 		} catch (final InterruptedException e) {
 		    Thread.currentThread().interrupt();
+		    return false;
 		}
 	    }
 	}

@@ -21,21 +21,21 @@ import org.reflections.util.ConfigurationBuilder;
 
 final class EventServiceScanner {
 
-    private static final EventServiceScanner instance = new EventServiceScanner();
+    private static final EventServiceScanner INSTANCE = new EventServiceScanner();
 
-    public static final EventServiceScanner getInstance() {
-	return instance;
+    public static EventServiceScanner getInstance() {
+	return INSTANCE;
     }
 
     private final Map<Class<?>, List<Method>> methodsToInvoke;
 
     private EventServiceScanner() {
-	final ConfigurationBuilder reflectionsConfiguration = new ConfigurationBuilder()
+	final ConfigurationBuilder configuration = new ConfigurationBuilder()
 		.setUrls(ClasspathHelper.getUrlsForPackagePrefix(""))
 		.setScanners(new SubTypesScanner(),
 		new TypeAnnotationsScanner(),
 		new MethodAnnotationsScanner());
-	final Reflections reflections = new Reflections(reflectionsConfiguration);
+	final Reflections reflections = new Reflections(configuration);
 	methodsToInvoke = collectAnnotatedMethodsToInvoke(reflections);
     }
 

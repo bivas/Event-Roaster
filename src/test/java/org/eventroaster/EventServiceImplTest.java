@@ -2,11 +2,7 @@ package org.eventroaster;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import org.eventroaster.EventService;
-import org.eventroaster.EventServiceFactory;
-import org.eventroaster.EventServiceKey;
 import org.eventroaster.annotation.Event;
 import org.eventroaster.annotation.EventHandler;
 import org.junit.Before;
@@ -27,24 +23,24 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void fireEventWithoutHandler() throws Exception {
+    public void fireEventWithoutHandler() {
 	eventService.fire(new TestEvent());
 	waitForEvent();
 	assertNotCalled();
     }
 
     private void assertNotCalled() {
-	assertFalse(called);
-	assertFalse(calledWithEvent);
+	assertFalse("default hander called", called);
+	assertFalse("hander called", calledWithEvent);
     }
 
     private void assertCalled() {
-	assertTrue(called);
-	assertTrue(calledWithEvent);
+	assertTrue("default hander not called", called);
+	assertTrue("hander not called", calledWithEvent);
     }
 
     @Test
-    public void fireEventWithHandler() throws Exception {
+    public void fireEventWithHandler() {
 	register();
 	eventService.fire(new TestEvent());
 	waitForEvent();
@@ -52,48 +48,37 @@ public class EventServiceImplTest {
     }
 
 
-    @Test
-    public void registerTwiceShouldFail() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void registerTwiceShouldFail() {
 	register();
-	try {
-	    register();
-	    fail("trying to register twice - should fail");
-	} catch (final IllegalArgumentException e) {
-	    //good
-	}
+	register();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void registerListnerWithoutEventHandler() {
+	eventService.register(new Object());
     }
 
     @Test
-    public void registerListnerWithoutEventHandler() throws Exception {
-	try {
-	    eventService.register(new Object());
-	    fail("no event handler method - should fail");
-	} catch (final IllegalArgumentException e) {
-	    //good
-	}
-    }
-
-    @Test
-    public void unregisterNonExistingListenerShouldNotFail() throws Exception {
+    public void unregisterNonExistingListenerShouldNotFail() {
 	eventService.unregister(new Object());
     }
 
-    @Test
-    public void failOnObjectNotAnnotatedAsEvent() throws Exception {
-	try {
-	    eventService.fire(new Object());
-	    fail("this is not an object with event annotation");
-	} catch (final IllegalArgumentException e) {
-	    // good
-	}
+    @Test(expected = IllegalArgumentException.class)
+    public void failOnObjectNotAnnotatedAsEvent() {
+	eventService.fire(new Object());
     }
 
     private void register() {
 	eventService.register(this);
     }
 
-    private void waitForEvent() throws InterruptedException {
-	Thread.sleep(2L);
+    private void waitForEvent() {
+	try {
+	    Thread.sleep(2L);
+	} catch (final InterruptedException e) {
+	    Thread.currentThread().interrupt();
+	}
     }
 
     @EventHandler(event = TestEvent.class)

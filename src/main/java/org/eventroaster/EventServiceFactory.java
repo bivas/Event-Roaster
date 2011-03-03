@@ -7,13 +7,17 @@ import java.util.Map;
 
 public final class EventServiceFactory {
 
-    private static final Map<EventServiceKey, EventService> cache = new HashMap<EventServiceKey, EventService>();
+    private EventServiceFactory() {
+	throw new UnsupportedOperationException("This factory shouldn't be initialized");
+    }
 
-    public static final EventService getEventService(final EventServiceKey eventServiceKey) {
-	EventService eventService = cache.get(eventServiceKey);
+    private static final Map<EventServiceKey, EventService> CACHE = new HashMap<EventServiceKey, EventService>();
+
+    public static EventService getEventService(final EventServiceKey eventServiceKey) {
+	EventService eventService = CACHE.get(eventServiceKey);
 	if (eventService == null) {
 	    eventService = createNewService(eventServiceKey);
-	    cache.put(eventServiceKey, eventService);
+	    CACHE.put(eventServiceKey, eventService);
 	}
 	return eventService;
     }
