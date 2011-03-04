@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ElementType.METHOD})
+@Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EventHandler {
 
@@ -15,6 +15,7 @@ public @interface EventHandler {
 
     /**
      * Priority of this event handler
+     * 
      * @return
      */
     int priority() default Integer.MAX_VALUE;

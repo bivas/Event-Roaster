@@ -8,13 +8,11 @@ public class EchoPublisher {
     private final EventService eventService;
 
     public EchoPublisher() {
-	eventService = EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY);
+        eventService = EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY);
     }
-
 
     public void callMe() {
-	eventService.fire(new EchoEvent());
+        eventService.fire(new EchoEvent());
     }
-
 
 }
