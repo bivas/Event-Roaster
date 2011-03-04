@@ -1,11 +1,14 @@
 package org.eventroaster;
 
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
 import org.eventroaster.annotation.EventHandler;
 
-final class EventPriorityComparator implements Comparator<Method> {
+final class EventPriorityComparator implements Comparator<Method>, Serializable {
+
+    private static final long serialVersionUID = -2302045408767546821L;
 
     @Override
     public int compare(final Method m1, final Method m2) {

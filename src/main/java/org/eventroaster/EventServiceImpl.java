@@ -56,7 +56,8 @@ final class EventServiceImpl implements EventService {
 
     private void validateListener(final Object listener) {
         for (final WeakReference<Object> weakListener : listeners) {
-            Validate.isTrue(!weakListener.get().equals(listener));
+            final Object knownListener = weakListener.get();
+            Validate.isTrue(!((knownListener == null) ||knownListener.equals(listener)));
         }
         final Class<? extends Object> listenerClass = listener.getClass();
         for (final List<Method> methods : methodsToInvoke.values()) {
