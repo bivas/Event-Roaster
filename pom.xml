@@ -4,7 +4,7 @@
 	<groupId>com.bludesk.event</groupId>
 	<artifactId>event-roaster</artifactId>
 	<name>EventRoaster</name>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<description>Easy to manage event handling framework</description>
 	<url>https://github.com/bivas/Event-Roaster</url>
 	<packaging>jar</packaging>
