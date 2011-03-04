@@ -72,6 +72,21 @@ public class EventServiceImplTest {
         eventService.fire(new Object());
     }
 
+    @Test
+    public void autoUnregister() throws Exception {
+        TestEventHandler testEventHandler = new TestEventHandler();
+        eventService.register(testEventHandler);
+        eventService.fire(new TestEvent());
+        waitForEvent();
+        assertTrue("should be called", TestEventHandler.called);
+        TestEventHandler.called = false;
+        testEventHandler = null;
+        System.gc();
+        eventService.fire(new TestEvent());
+        waitForEvent();
+        assertFalse("should not be called", TestEventHandler.called);
+    }
+
     private void register() {
         eventService.register(this);
     }
@@ -102,5 +117,16 @@ public class EventServiceImplTest {
 
     @Event
     private static final class TestEvent {}
+
+    private static final class TestEventHandler {
+
+        static boolean called = false;
+
+        @SuppressWarnings("unused")
+        @EventHandler(event = TestEvent.class)
+        public void dummy(){
+            called = true;
+        }
+    }
 
 }
