@@ -1,44 +1,42 @@
 Description:
-	Easy to manage event handling framework 
-	
-	
+    Easy to use event handling framework.
+    Configurable by annotation, marking objects with @Event and methods by @EventHandler  
+    
+    
 How to (code can be found in org.eventroaster.example) ?
 
 - Declare a new Event:
 
-	@Event
-	public class EchoEvent {}
+    @Event
+    public class EchoEvent {}
 
 - Declare an Event Handler (simply annotate the method)
 
-	public class EchoHandler {
+    public class EchoHandler {
 
-	    EchoHandler() {
-			EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY).register(this);
-	    }
-	
-	    @EventHandler(event = EchoEvent.class)
-	    public void handle(final EchoEvent event) {
-			System.out.println("I got the event!");
-	    }
-	}
-	
+        EchoHandler() {
+            EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY).register(this);
+        }
+    
+        @EventHandler(event = EchoEvent.class)
+        public void handle() {
+            System.out.println("I got the event!");
+        }
+    }
+    
 - Fire an event to service
 
-	public class EchoPublisher {
+    public class EchoPublisher {
 
-	    private final EventService eventService;
-	
-	    public EchoPublisher() {
-			eventService = EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY);
-	    }
-	
-	    public void callMe() {
-			eventService.fire(new EchoEvent());
-	    }
-	}
-	
-	
-	
-	
+        private final EventService eventService;
+    
+        public EchoPublisher() {
+            eventService = EventServiceFactory.getEventService(EchoServiceKey.ECHO_SERVICE_KEY);
+        }
+    
+        public void callMe() {
+            eventService.fire(new EchoEvent());
+        }
+    }
+    
 http://iambivas.blogspot.com/
