@@ -6,7 +6,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.eventroaster.annotation.Event;
 import org.eventroaster.annotation.EventHandler;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +26,7 @@ public class EventServiceImplTest {
 
     @Test
     public void fireEventWithoutHandler() {
-        eventService.fire(new TestEvent());
+        eventService.fire(new StubTestEvent());
         waitForEvent();
         assertNotCalled();
     }
@@ -46,7 +45,7 @@ public class EventServiceImplTest {
     @Test
     public void fireEventWithHandler() {
         register();
-        eventService.fire(new TestEvent());
+        eventService.fire(new StubTestEvent());
         waitForEvent();
         assertCalled();
     }
@@ -63,6 +62,12 @@ public class EventServiceImplTest {
     }
 
     @Test
+    public void unregister() throws Exception {
+        register();
+        eventService.unregister(this);
+    }
+
+    @Test
     public void unregisterNonExistingListenerShouldNotFail() {
         eventService.unregister(new Object());
     }
@@ -76,13 +81,13 @@ public class EventServiceImplTest {
     public void autoUnregister() throws Exception {
         TestEventHandler testEventHandler = new TestEventHandler();
         eventService.register(testEventHandler);
-        eventService.fire(new TestEvent());
+        eventService.fire(new StubTestEvent());
         waitForEvent();
         assertTrue("should be called", TestEventHandler.called);
         TestEventHandler.called = false;
         testEventHandler = null;
         System.gc();
-        eventService.fire(new TestEvent());
+        eventService.fire(new StubTestEvent());
         waitForEvent();
         assertFalse("should not be called", TestEventHandler.called);
     }
@@ -99,14 +104,14 @@ public class EventServiceImplTest {
         }
     }
 
-    @EventHandler(event = TestEvent.class, priority = 10)
+    @EventHandler(event = StubTestEvent.class, priority = 10)
     public void handlerTest() {
         called = true;
         priorityCheck.add("handlerTest");
     }
 
-    @EventHandler(event = TestEvent.class)
-    public void handlerTestWithEvent(final TestEvent event) {
+    @EventHandler(event = StubTestEvent.class)
+    public void handlerTestWithEvent(final StubTestEvent event) {
         calledWithEvent = true;
         priorityCheck.add("handlerTestWithEvent");
     }
@@ -115,15 +120,12 @@ public class EventServiceImplTest {
         TEST_KEY;
     }
 
-    @Event
-    private static final class TestEvent {}
-
+    @SuppressWarnings("unused")
     private static final class TestEventHandler {
 
         static boolean called = false;
 
-        @SuppressWarnings("unused")
-        @EventHandler(event = TestEvent.class)
+        @EventHandler(event = StubTestEvent.class)
         public void dummy(){
             called = true;
         }
