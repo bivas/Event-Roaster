@@ -44,7 +44,7 @@ final class EventHandling implements Callable<Boolean> {
         }
     }
 
-    private void fireEvent(final Object event) {
+    private void fireEvent(final Object event) throws InterruptedException {
         final List<Callable<Boolean>> fireEvents = new ArrayList<Callable<Boolean>>();
         for (final Method method : methodsToInvoke.get(event.getClass())) {
             final Object listener = findListener(method.getDeclaringClass());
@@ -53,11 +53,7 @@ final class EventHandling implements Callable<Boolean> {
             }
             fireEvents.add(new EventHandlingCallback(event, listener, method));
         }
-        try {
-            executorService.invokeAll(fireEvents);
-        } catch (final InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        executorService.invokeAll(fireEvents);
     }
 
     private Object findListener(final Class<?> declaringClass) {
