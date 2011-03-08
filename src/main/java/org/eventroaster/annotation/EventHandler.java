@@ -17,7 +17,7 @@ public @interface EventHandler {
 
     /**
      * Indicated if this {@link EventHandler} should stop other handlers from processing
-     * (invoked method must return boolean)
+     * (invoked method must return boolean; must not include priority attribute)
      * @return
      */
     boolean blocker() default false;
