@@ -22,6 +22,11 @@ How to (code can be found in org.eventroaster.example) ?
         public void handle() {
             System.out.println("I got the event!");
         }
+        
+        @EventHandler(event = EchoEvent.class)
+        public void handleEvent(final EchoEvent echoEvent) {
+            System.out.println("I got event =" + echoEvent);
+        }
     }
     
 - Fire an event to service

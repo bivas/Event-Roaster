@@ -13,4 +13,9 @@ public class EchoHandler {
     public void handle() {
         System.out.println("I got the event!");
     }
+
+    @EventHandler(event = EchoEvent.class)
+    public void handleEvent(final EchoEvent echoEvent) {
+        System.out.println("I got event =" + echoEvent);
+    }
 }
