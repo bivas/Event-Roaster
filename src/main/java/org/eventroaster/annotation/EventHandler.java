@@ -9,13 +9,22 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EventHandler {
 
+    /**
+     * Which {@link Event} to handle
+     * @return
+     */
     Class<?> event();
 
+    /**
+     * Indicated if this {@link EventHandler} should stop other handlers from processing
+     * (invoked method must return boolean)
+     * @return
+     */
     boolean blocker() default false;
 
     /**
-     * Priority of this event handler
-     * 
+     * Priority of this event handler (must be greater than zero)
+     *
      * @return
      */
     int priority() default Integer.MAX_VALUE;
