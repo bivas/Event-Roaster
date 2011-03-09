@@ -69,6 +69,14 @@ final class EventServiceScanner {
                             event);
         }
 
+        // The event is blocker
+        if(annotation.blocker()) {
+            final Class<?> returnType = method.getReturnType();
+            Validate.isTrue(Boolean.class.isAssignableFrom(returnType)
+                            || boolean.class.isAssignableFrom(returnType),
+                            "Blocker method should return Boolean");
+        }
+
     }
 
     private void collectInvokedMethod(final Map<Class<?>, List<Method>> methods, final Method method) {
