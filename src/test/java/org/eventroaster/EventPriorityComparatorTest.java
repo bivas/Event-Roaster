@@ -58,8 +58,7 @@ public class EventPriorityComparatorTest {
         final Method a = getMethod(object, "methodA");
         final Method b = getMethod(object, "methodB");
 
-        final int result = tested.compare(a, b);
-        return result;
+        return tested.compare(a, b);
     }
 
     private Method getMethod(final Object object, final String name) {

@@ -62,7 +62,7 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void unregister() throws Exception {
+    public void unregister() {
         register();
         eventService.unregister(this);
     }
@@ -78,7 +78,7 @@ public class EventServiceImplTest {
     }
 
     @Test
-    public void autoUnregister() throws Exception {
+    public void autoUnregister() {
         TestEventHandler testEventHandler = new TestEventHandler();
         eventService.register(testEventHandler);
         eventService.fire(new StubTestEvent());
@@ -126,7 +126,7 @@ public class EventServiceImplTest {
         static boolean called = false;
 
         @EventHandler(event = StubTestEvent.class)
-        public void dummy(){
+        public void dummy() {
             called = true;
         }
     }

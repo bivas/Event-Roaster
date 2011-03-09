@@ -79,7 +79,7 @@ public class EventHandlingCallbackTest {
         }
 
         public void mockMethodThrowingException() {
-            throw new RuntimeException();
+            throw new UnsupportedOperationException();
         }
     }
 
