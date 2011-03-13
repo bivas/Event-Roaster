@@ -9,7 +9,7 @@
 	<groupId>com.github.eventroaster</groupId>
 	<artifactId>event-roaster</artifactId>
 	<name>EventRoaster</name>
-	<version>0.1</version>
+	<version>0.1-SNAPSHOT</version>
 	<description>Easy to use event handling framework</description>
 	<url>https://github.com/bivas/Event-Roaster</url>
 	<packaging>jar</packaging>
@@ -50,6 +50,18 @@
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>3.0.5.RELEASE</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>3.0.5.RELEASE</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
