@@ -29,6 +29,7 @@ final class EventServiceImpl implements EventService {
 
     @Override
     public void fire(final Object event) {
+    	Validate.notNull(event, "event is required for invocation");
         Validate.isTrue(event.getClass().isAnnotationPresent(Event.class),
                         "event is not annotated as @Event");
         events.add(event);
